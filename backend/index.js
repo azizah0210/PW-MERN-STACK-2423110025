@@ -1,39 +1,43 @@
-require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
-const db = require("./models");
-const app = express();
-// Middleware
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    credentials: true,
-  }),
-);
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+require("dotenv").config(); 
+const express = require("express"); 
+const cors = require("cors"); 
+const db = require("./models"); 
+const app = express(); 
+ 
+// Middleware 
+app.use(cors({ 
+    origin: "http://localhost:3000", 
+    credentials: true 
+})); 
+ 
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true })); 
 
 const bookRoutes = require("./routes/bookRoutes");
 app.use("/api/books", bookRoutes);
 
-// Test database connection
-db.sequelize
-  .authenticate()
-  .then(() => {
-    console.log("✓ Koneksi ke database MySQL berhasil!");
-  })
-  .catch((err) => {
-    console.error("✗ Koneksi ke database gagal:", err.message);
-    process.exit(1);
-  });
-// Basic Routes
-app.get("/", (req, res) => {
-  res.json({
-    message: "Server berjalan dengan baik",
-    status: "active",
-    timestamp: new Date(),
-  });
-});
+const userRoutes = require("./routes/userRoutes");
+app.use("/api/users", userRoutes);
+ 
+// Test database connection 
+db.sequelize.authenticate() 
+    .then(() => { 
+        console.log("✓ Koneksi ke database MySQL berhasil!"); 
+    }) 
+    .catch((err) => { 
+        console.error("✗ Koneksi ke database gagal:", err.message); 
+        process.exit(1); 
+    }); 
+ 
+// Basic Routes 
+app.get("/", (req, res) => { 
+    res.json({ 
+        message: "Server berjalan dengan baik", 
+        status: "active", 
+        timestamp: new Date() 
+    }); 
+}); 
+ 
 app.get("/api/info", (req, res) => {
   res.json({
     message: "API MERN Stack Build by Express JS",
@@ -43,6 +47,7 @@ app.get("/api/info", (req, res) => {
     timestamp: new Date(),
   });
 });
+
 // 404 Handler
 app.use((req, res) => {
   res.status(404).json({
@@ -50,6 +55,7 @@ app.use((req, res) => {
     message: "Route not found",
   });
 });
+
 // Error Handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -59,6 +65,7 @@ app.use((err, req, res, next) => {
     error: err.message,
   });
 });
+
 // Start Server
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

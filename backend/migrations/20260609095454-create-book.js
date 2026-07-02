@@ -1,11 +1,8 @@
-"use strict";
-
-const { sequelize } = require('../models');
-
+'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("books", {
+    await queryInterface.createTable("Books", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -52,16 +49,14 @@ module.exports = {
         type: Sequelize.STRING(500),
         allowNull: true,
       },
-
-        created_by: {
+      created_by: {
         type: Sequelize.STRING(255),
-        allowNull: true,
+        allowNull: true
       },
       updated_by: {
         type: Sequelize.STRING(255),
-        allowNull: true,
+        allowNull: true
       },
-
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -70,17 +65,15 @@ module.exports = {
       updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal(
-          "CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP",
-        ),
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
       },
     });
-    // Add indexes
-    await queryInterface.addIndex("books", ["title"]);
-    await queryInterface.addIndex("books", ["author"]);
-    await queryInterface.addIndex("books", ["is_free"]);
+    // Add indexes 
+    await queryInterface.addIndex('books', ['title']); 
+    await queryInterface.addIndex('books', ['author']); 
+    await queryInterface.addIndex('books', ['is_free']);
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("books");
-  },
+    await queryInterface.dropTable('Books');
+  }
 };

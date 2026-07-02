@@ -115,7 +115,7 @@ module.exports = (sequelize, DataTypes) => {
           isValidPath(value) {
             if (value && !value.startsWith("/uploads/")) {
               throw new Error(
-                "Image must be a valid file path startingwith /uploads/",
+                "Image must be a valid file path starting with /uploads/",
               );
             }
           },
@@ -133,7 +133,7 @@ module.exports = (sequelize, DataTypes) => {
               );
               if (!hasValidExtension) {
                 throw new Error(
-                  "Image must have a valid extension (jpg,jpeg, png, gif, webp)",
+                  "Image must have a valid extension (jpg, jpeg, png, gif, webp)",
                 );
               }
             }
